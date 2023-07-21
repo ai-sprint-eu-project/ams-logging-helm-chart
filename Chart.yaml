@@ -1,0 +1,13 @@
+apiVersion: v2
+name: AMS-logs
+version: '1.0'
+description: AI-SPRINT Monitoring Subsystem (AMS) log management
+authors:
+  - name: Michał Soczewka
+    email: msoczewka@7bulls.com
+maintainers:
+  - name: Michał Soczewka
+    email: msoczewka@7bulls.com
+dependencies:
+  - name: elasticsearch
+  - name: kibana

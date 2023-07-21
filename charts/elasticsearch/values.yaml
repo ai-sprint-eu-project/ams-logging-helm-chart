@@ -1,0 +1,145 @@
+clusterName: "ai-sprint-monit-elasticsearch"
+nodeGroup: "master"
+masterService: ""
+roles:
+  master: "true"
+  ingest: "true"
+  data: "true"
+  remote_cluster_client: "true"
+  ml: "true"
+replicas: 1
+minimumMasterNodes: 1
+esMajorVersion: ""
+clusterDeprecationIndexing: "false"
+esConfig: {}
+esJvmOptions: {}
+extraEnvs: []
+envFrom: []
+secretMounts: []
+hostAliases: []
+image: "docker.elastic.co/elasticsearch/elasticsearch"
+imageTag: "7.17.3"
+imagePullPolicy: "IfNotPresent"
+podAnnotations: {}
+labels: {}
+esJavaOpts: ""
+resources: {}
+initResources: {}
+networkHost: "0.0.0.0"
+volumeClaimTemplate:
+  accessModes: ["ReadWriteOnce"]
+  storageClassName: "local-path"
+  resources:
+    requests:
+      storage: 30Gi
+rbac:
+  create: false
+  serviceAccountAnnotations: {}
+  serviceAccountName: ""
+  automountToken: true
+podSecurityPolicy:
+  create: false
+  name: ""
+  spec:
+    privileged: true
+    fsGroup:
+      rule: RunAsAny
+    runAsUser:
+      rule: RunAsAny
+    seLinux:
+      rule: RunAsAny
+    supplementalGroups:
+      rule: RunAsAny
+    volumes:
+      - secret
+      - configMap
+      - persistentVolumeClaim
+      - emptyDir
+persistence:
+  enabled: true
+  labels:
+    enabled: false
+  annotations: {}
+extraVolumes: []
+extraVolumeMounts: []
+extraContainers: []
+extraInitContainers: []
+priorityClassName: ""
+antiAffinityTopologyKey: "kubernetes.io/hostname"
+antiAffinity: "hard"
+nodeAffinity:
+  requiredDuringSchedulingIgnoredDuringExecution:
+    nodeSelectorTerms:
+      - matchExpressions:
+        - key: node-role.kubernetes.io/control-plane
+          operator: Exists
+podManagementPolicy: "Parallel"
+enableServiceLinks: true
+protocol: http
+httpPort: 9200
+transportPort: 9300
+service:
+  enabled: true
+  labels: {}
+  labelsHeadless: {}
+  type: ClusterIP
+  publishNotReadyAddresses: false
+  nodePort: ""
+  annotations: {}
+  httpPortName: http
+  transportPortName: transport
+  loadBalancerIP: ""
+  loadBalancerSourceRanges: []
+  externalTrafficPolicy: ""
+updateStrategy: RollingUpdate
+maxUnavailable: 0
+podSecurityContext:
+  fsGroup: 1000
+  runAsUser: 1000
+securityContext:
+  capabilities:
+    drop:
+      - ALL
+  runAsNonRoot: true
+  runAsUser: 1000
+terminationGracePeriod: 120
+sysctlVmMaxMapCount: 262144
+readinessProbe:
+  failureThreshold: 3
+  initialDelaySeconds: 10
+  periodSeconds: 10
+  successThreshold: 3
+  timeoutSeconds: 5
+clusterHealthCheckParams: "wait_for_status=green&timeout=1s"
+schedulerName: ""
+imagePullSecrets: []
+nodeSelector: {}
+tolerations:
+  - key: node-role.kubernetes.io/control-plane
+    operator: Exists
+    effect: NoSchedule
+  - key: node-role.kubernetes.io/master
+    operator: Exists
+    effect: NoSchedule
+ingress:
+  enabled: false
+  annotations: {}
+  className: "nginx"
+  pathtype: ImplementationSpecific
+  hosts: []
+  tls: []
+nameOverride: ""
+fullnameOverride: ""
+healthNameOverride: ""
+lifecycle: {}
+sysctlInitContainer:
+  enabled: true
+keystore: []
+networkPolicy:
+  http:
+    enabled: false
+  transport:
+    enabled: false
+tests:
+  enabled: true
+fsGroup: ""
